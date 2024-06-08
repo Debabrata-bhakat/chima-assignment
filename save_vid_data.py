@@ -8,7 +8,7 @@ def save_vid(vid_id, vid_title):
     # Establishing a Google Sheets connection
     conn = st.connection("gsheets", type=GSheetsConnection)
 
-    # Fetch existing vendors data
+    # Fetch existing  data
     existing_data = conn.read(worksheet="vid", ttl=5)
     print(existing_data)
     existing_data = existing_data.dropna(how="all")

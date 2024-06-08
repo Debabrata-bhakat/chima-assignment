@@ -20,6 +20,8 @@ BEARER = os.environ['BEARER']
 
 url = "https://api.synthesia.io/v2/videos"
 
+
+# payload for calling systesia api
 payload = {
     "test": "false",
     "visibility": "public",
@@ -95,6 +97,7 @@ def main():
         if response.get('status'):
             submit_button_clicked = True
             video_id = response.get('id')
+            # save video data to excel
             save_vid(video_id,title)
         else:
             st.error("Some unknown error occured. Please try again after a few minutes")
