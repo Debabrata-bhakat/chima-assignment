@@ -2,7 +2,7 @@ Scripts/
 etc/
 pyvenv.cfg
 share/
-# todo.txt
+todo.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
