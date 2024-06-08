@@ -1,11 +1,7 @@
 import json
 import requests
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
-
-BEARER = os.getenv('BEARER')
 
 def return_summary(comp_info, prod_info, tar_group, BEARER):
     try: 
