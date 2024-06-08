@@ -10,6 +10,8 @@ load_dotenv()
 
 AUTH = st.secrets["SYNTHESIA_API"]
 BEARER = st.secrets["BEARER"]
+# AUTH = os.environ['SYNTHESIA_API']
+# BEARER = os.environ['BEARER']
 url = "https://api.synthesia.io/v2/videos"
 
 payload = {
@@ -54,30 +56,40 @@ def main():
 
 
 
-        # Dropdown for selecting the number of words in the ad script
-        word_count = st.selectbox(
+        # Dropdown for selecting the ad script length
+        length_options = ["Short", "Medium", "Long"]
+        selected_length = st.selectbox(
             "Approximately how many words in the ad script?",
-            options=range(1, 51),  # Dropdown options from 1 to 50
+            options=length_options,
             index=0  # Default selection is the first option
         )
 
-        # Display the selected word count
-        st.write(f"You selected {word_count} words for the ad script.")
+        # Display the selected length
+        st.write(f"You selected a {selected_length} ad script.")
 
 
         # scriptText = "  \n" +company + "  \n" + product + "  \n" + consumer
-        scriptText = return_summary(company,product,consumer,BEARER,word_count)
-        st.write(f"Title: *{title}*")
-        st.write(f"Script: {scriptText}")
         submit_button = st.form_submit_button("Submit")
 
-
+    scriptText = ""
     if submit_button:
+        word_count = 15
+        if(selected_length == "Short"):
+            word_count = 15
+        elif(selected_length == "Medium"):
+            word_count = 30
+        else:
+            word_count = 50
+        scriptText = return_summary(company,product,consumer,BEARER,word_count)
         payload["title"] = title
         payload["input"][0]['scriptText'] = scriptText
         print(scriptText)
         response = requests.post(url, json=payload, headers=headers).json()
         print(response)
+
+        # st.write(f"Title: *{title}*")
+        # st.write(f"Script: {scriptText}")
+
         if response.get('status'):
             submit_button_clicked = True
             video_id = response.get('id')
@@ -90,7 +102,7 @@ def main():
         col1, col2 = st.columns(2)
 
         with col1:
-            st.write(f"Title: **{title}")
+            st.write(f"Title: {title}")
             st.write(f"Script: {scriptText}")
 
         with col2:
@@ -112,7 +124,7 @@ def main():
                 time.sleep(3)  # Simulate some computation
                 current_progress = 100*i//max_time
                 progress_bar.progress(current_progress)
-                status_text.text(f"Progress: {current_progress}%")
+                status_text.text(f"Progress: {current_progress}%\n Thank you for your patience!")
             if task_completed:
                 current_progress = 100
                 progress_bar.progress(current_progress)
