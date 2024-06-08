@@ -1,9 +1,15 @@
 import json
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+BEARER = os.getenv('BEARER')
 
 def return_summary(comp_info, prod_info, tar_group):
     try: 
-        headers = {"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiN2MwNWZjYTEtMjBjYi00YTMxLWExOTktZmNiNWU0ZWE4NzUxIiwidHlwZSI6ImFwaV90b2tlbiJ9.--PS8uDyLyFqxPmT5UNbwmX252WHWILy7yh7sq6WNyo"}
+        headers = {"Authorization": f"Bearer {BEARER}"}
 
         url = "https://api.edenai.run/v2/text/chat"
         payload = {
