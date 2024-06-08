@@ -8,9 +8,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# AUTH = os.getenv('SYNTHESIA_API')
-# AUTH = st.secrets["SYNTHESIA_API"]
-# BEARER = st.secrets["BEARER"]
+AUTH = st.secrets["SYNTHESIA_API"]
+BEARER = st.secrets["BEARER"]
 url = "https://api.synthesia.io/v2/videos"
 
 payload = {
