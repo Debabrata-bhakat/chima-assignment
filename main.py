@@ -2,16 +2,21 @@ import streamlit as st
 import time
 import requests
 from magic_script import return_summary
+from streamlit_gsheets import GSheetsConnection
+
+import pandas as pd
 
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-AUTH = st.secrets["SYNTHESIA_API"]
-BEARER = st.secrets["BEARER"]
-# AUTH = os.environ['SYNTHESIA_API']
-# BEARER = os.environ['BEARER']
+# AUTH = st.secrets["SYNTHESIA_API"]
+# BEARER = st.secrets["BEARER"]
+AUTH = os.environ['SYNTHESIA_API']
+BEARER = os.environ['BEARER']
+
+
 url = "https://api.synthesia.io/v2/videos"
 
 payload = {
@@ -59,14 +64,10 @@ def main():
         # Dropdown for selecting the ad script length
         length_options = ["Short", "Medium", "Long"]
         selected_length = st.selectbox(
-            "Approximately how many words in the ad script?",
+            "Advertisement length",
             options=length_options,
             index=0  # Default selection is the first option
         )
-
-        # Display the selected length
-        st.write(f"You selected a {selected_length} ad script.")
-
 
         # scriptText = "  \n" +company + "  \n" + product + "  \n" + consumer
         submit_button = st.form_submit_button("Submit")
@@ -95,6 +96,8 @@ def main():
             video_id = response.get('id')
         else:
             st.error("Some unknown error occured. Please try again after a few minutes")
+    
+    
 
     # If submit button is clicked, display form details and progress bar
     if submit_button_clicked:
@@ -124,7 +127,7 @@ def main():
                 time.sleep(3)  # Simulate some computation
                 current_progress = 100*i//max_time
                 progress_bar.progress(current_progress)
-                status_text.text(f"Progress: {current_progress}%\n Thank you for your patience!")
+                status_text.text(f"Progress: {current_progress}%\n Thank you for your patience!\n Please do not leave this page.")
             if task_completed:
                 current_progress = 100
                 progress_bar.progress(current_progress)
