@@ -8,7 +8,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-AUTH = os.getenv('SYNTHESIA_API')
+# AUTH = os.getenv('SYNTHESIA_API')
+AUTH = st.secrets["SYNTHESIA_API"]
+BEARER = st.secrets["BEARER"]
 url = "https://api.synthesia.io/v2/videos"
 
 payload = {
@@ -51,7 +53,7 @@ def main():
         consumer = st.text_input("Enter target Consumer Profile")
         title = st.text_input("Enter title for the commercial")
         # scriptText = "  \n" +company + "  \n" + product + "  \n" + consumer
-        scriptText = return_summary(company,product,consumer)
+        scriptText = return_summary(company,product,consumer,BEARER)
         st.write(f"Title: *{title}*")
         st.write(f"Script: {scriptText}")
         submit_button = st.form_submit_button("Submit")

@@ -7,7 +7,7 @@ load_dotenv()
 
 BEARER = os.getenv('BEARER')
 
-def return_summary(comp_info, prod_info, tar_group):
+def return_summary(comp_info, prod_info, tar_group, BEARER):
     try: 
         headers = {"Authorization": f"Bearer {BEARER}"}
 
