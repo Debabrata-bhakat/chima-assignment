@@ -5,6 +5,7 @@ from magic_script import return_summary
 from streamlit_gsheets import GSheetsConnection
 
 import pandas as pd
+from save_vid_data import save_vid
 
 import os
 from dotenv import load_dotenv
@@ -94,6 +95,7 @@ def main():
         if response.get('status'):
             submit_button_clicked = True
             video_id = response.get('id')
+            save_vid(video_id,title)
         else:
             st.error("Some unknown error occured. Please try again after a few minutes")
     
@@ -127,7 +129,7 @@ def main():
                 time.sleep(3)  # Simulate some computation
                 current_progress = 100*i//max_time
                 progress_bar.progress(current_progress)
-                status_text.text(f"Progress: {current_progress}%\n Thank you for your patience!\n Please do not leave this page.")
+                status_text.text(f"Progress: {current_progress}%\n Your video id is : {video_id}\n Please take note of it. \nYou can leave this page now. \nYour video will be in downloads page.")
             if task_completed:
                 current_progress = 100
                 progress_bar.progress(current_progress)
